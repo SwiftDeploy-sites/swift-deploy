@@ -1,0 +1,504 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Swift Deploy – Hassle-Free, Professional Business Websites in Minutes</title>
+  <link rel="icon" href="J7O0HNohmSrq-favicon.png" type="image/png" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #f7fafc;
+      color: #222b3a;
+      margin: 0;
+      padding: 0;
+    }
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      background-color: #e2e6ea;
+      color: #25385a;
+      backdrop-filter: blur(10px);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      border-bottom: 1px solid #eee;
+    }
+    .logo {
+      font-weight: 600;
+      font-size: 1.25rem;
+      color: #ff6542;
+    }
+    .nav-toggle {
+      display: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+    .desktop-nav {
+      display: flex;
+      gap: 1.5rem;
+    }
+    .mobile-nav {
+      display: none;
+      flex-direction: column;
+      position: absolute;
+      top: 60px;
+      right: 20px;
+      background-color: #e2e6ea;
+      color: #25385a;
+      border: 1px solid #ddd;
+      padding: 1rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      z-index: 999;
+    }
+    .mobile-nav.show {
+      display: flex;
+    }
+    nav a {
+      text-decoration: none;
+      color: #25385a;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+    nav a:hover {
+      color: #1d67ce;
+    }
+    @media (max-width: 768px) {
+      .nav-toggle {
+        display: block;
+      }
+      .desktop-nav {
+        display: none;
+      }
+    }
+    .container {
+      max-width: 1000px;
+      margin: auto;
+      padding: 2rem;
+    }
+    header {
+      text-align: center;
+      padding: 4rem 1rem 2rem;
+    }
+    h1 {
+      font-size: 2.75rem;
+      color: #1d67ce;
+      margin-bottom: 1rem;
+    }
+    p {
+      font-size: 1.125rem;
+      line-height: 1.6;
+    }
+    .section {
+      background-color: #fff;
+      color: #222b3a;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+      margin-top: 3rem;
+    }
+    input, textarea, button {
+      width: 100%;
+      padding: 1rem;
+      margin-top: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 1rem;
+      box-sizing: border-box;
+    }
+    button {
+      background-color: #ff6542;
+      color: white;
+      font-weight: bold;
+      border: none;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    button:hover {
+      background-color: #1d67ce;
+    }
+    .section-heading {
+      font-size: 1.75rem;
+      margin-bottom: 1rem;
+      color: #ff6542;
+    }
+    ul {
+      padding-left: 1.5rem;
+    }
+    blockquote {
+      font-style: italic;
+      margin: 1rem 0;
+      padding-left: 1rem;
+      border-left: 4px solid #ff6542;
+      color: #555;
+    }
+    footer {
+      padding: 2rem;
+      background-color: #1d67ce;
+      color: #f7fafc;
+    }
+    .footer-columns {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
+    .footer-columns div {
+      min-width: 200px;
+      margin-bottom: 1rem;
+    }
+    .footer-columns a {
+      color: #ff6542;
+      text-decoration: none;
+      margin-right: 10px;
+    }
+    footer a {
+      color: inherit;
+      text-decoration: none;
+    }
+    
+    footer a:hover {
+      color: inherit;
+      text-decoration: underline;
+    }
+    /* Scroll-to-top button */
+    #scrollToTopBtn {
+      position: fixed;
+      bottom: 32px;
+      right: 32px;
+      width: 44px;
+      height: 44px;
+      background: #ff6542;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.11);
+      opacity: 0.85;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      cursor: pointer;
+      transition: opacity 0.2s;
+      font-size: 1.2rem;
+    }
+    #scrollToTopBtn:hover {
+      opacity: 1;
+      background: #1d67ce;
+    }
+    /* Accessibility & Responsive tweaks */
+    @media (max-width: 600px) {
+      .container {
+        padding: 0.5rem;
+      }
+      .section {
+        padding: 1.1rem;
+      }
+      nav {
+        padding: 1rem;
+      }
+    }
+  </style>
+  <script>
+    function toggleMenu() {
+      const navLinks = document.getElementById("navLinks");
+      navLinks.classList.toggle("show");
+    }
+
+    // Scroll-to-top button logic
+    window.addEventListener('DOMContentLoaded', function() {
+      const scrollBtn = document.getElementById('scrollToTopBtn');
+      window.onscroll = function() {
+        if (document.body.scrollTop > 320 || document.documentElement.scrollTop > 320) {
+          scrollBtn.style.display = 'flex';
+        } else {
+          scrollBtn.style.display = 'none';
+        }
+      };
+      scrollBtn.onclick = function() {
+        window.scrollTo({top: 0, behavior: 'smooth'});
+      };
+    });
+  </script>
+</head>
+<body>
+  <nav>
+    <div class="logo" id="logo-container">
+      
+    </div>
+
+   
+</div>
+
+    <div class="nav-toggle" onclick="toggleMenu()">☰</div>
+    <div class="desktop-nav">
+      <a href="#services">Services</a>
+      <a href="#about">About</a>
+      <!-- <a href="#testimonials">Testimonials</a> -->
+      <a href="#contact">Contact</a>
+    </div>
+    <div class="mobile-nav" id="navLinks">
+      <a href="#services">Services</a>
+      <a href="#about">About</a>
+      <!-- <a href="#testimonials">Testimonials</a> -->
+      <a href="#contact">Contact</a>
+    </div>
+  </nav>
+
+  <div class="container">
+    <header>
+      <h1>Swift Deploy: Your Professional Business Website—Ready in Minutes</h1>
+      <p>
+      <strong>Ready to grow your business online?</strong> 
+      <br>
+      With <strong>Swift Deploy</strong>, you can have a beautifully designed, single-page website tailored just for your small or mid-sized business—in as little as <strong>10 minutes</strong>. Harness the power of <strong>Artificial Intelligence</strong> combined with proven web design expertise, and get a custom, SEO-optimized website for a fixed, affordable price. This very page was built by Swift Deploy for demonstration!
+      </p>
+    </header>
+
+    <section class="section" id="services">
+      <h2 class="section-heading">What We Offer</h2>
+      <ul>
+        <li>
+          <strong>Stunning single page websites for small &amp; mid-size businesses</strong>: Custom layout, AI-driven speed, and expert quality.
+        </li>
+        <li>
+          <strong>Easy, fast setup in just 10 minutes</strong>: Go live immediately—no hidden fees or ongoing costs.
+        </li>
+        <li>
+          <strong>Fully SEO-optimized and customizable</strong>: Use your colors, logos, and let Google love your business with our optimization.
+        </li>
+      </ul>
+      <p>
+        At Swift Deploy, we excel at combining technology and creative design. Whether you're a startup, retail shop, service provider, agency, or freelancer, we deliver the <strong>online presence</strong> you need—without technical headaches. Our process is streamlined for anyone, even if you've never built a website before.
+      </p>
+    </section>
+
+    <section class="section" id="about">
+      <h2 class="section-heading">About Swift Deploy</h2>
+      <p>
+        <strong>Swift Deploy</strong> was founded by <strong>Budder Technology LLC</strong>, a reputable technology solutions provider with years of experience in web development and custom software. Over the years, the Budder Technology team has learned what truly matters for growing businesses: a strong, credible, and <strong>search-engine-optimized website</strong> at a price everyone can afford. <br><br>
+        That's why Swift Deploy was created—to offer <strong>affordable, professional</strong> single-page business websites that are robust enough to compete, yet so simple to launch, they can be ready in just minutes. 
+        Leveraging both advanced <strong>AI algorithms</strong> and hands-on human design, Swift Deploy ensures each client's website is unique, branded, and reflects your company vision.
+        <br><br>
+        Our clients benefit from:
+      </p>
+      <ul>
+        <li>
+          <strong>Transparent, one-time pricing of just $49</strong>—no monthly subscriptions, no surprise charges.
+        </li>
+        <li>
+          <strong>Lifetime hosting for free</strong> using GitHub Pages—your site is reliable, fast, and doesn’t cost extra.
+        </li>
+        <li>
+          <strong>Custom color palettes</strong> and branding—make your website match your style and logo.
+        </li>
+        <li>
+          <strong>SEO optimization</strong> built-in—from structure to meta tags, your business site is ready to compete.
+        </li>
+        <li>
+          <strong>Optional custom domain setup</strong>—through Budder Technology, you can use your own business URL for an extra professional touch.
+        </li>
+      </ul>
+      <p>
+        Want to see how hassle-free it can be? Over a decade of industry knowledge informs our designs and technical approach. Swift Deploy is more than a builder—it's your <strong>competitive edge online</strong>.
+      </p>
+    </section>
+
+    <!-- <section class="section" id="testimonials">
+      <h2 class="section-heading">Client Success Stories</h2>
+      <blockquote>~testimonial_1~</blockquote>
+      <blockquote>~testimonial_2~</blockquote>
+    </section> -->
+
+    <section class="section" id="contact">
+      <h2 class="section-heading">Contact &amp; Next Steps</h2>
+      <p>
+        Ready to instantly grow your business online? 
+        <br>
+        <strong>Visit the official Swift Deploy website now</strong> and discover how easy it is to get started. For custom requests or more information, please use the links below.
+      </p>
+      <ul>
+        <li>
+          <a href="https://swiftdeploy.com" target="_blank" style="color:#1d67ce; font-weight:bold;">
+            Explore SwiftDeploy.com
+          </a>
+        </li>
+        <li>
+          <a href="https://swiftdeploy.com/make-my-website/" target="_blank" style="color:#ff6542; font-weight:bold;">
+            Start Building My Website Instantly
+          </a>
+        </li>
+      </ul>
+      <p>
+        For business partnerships or custom development, visit our parent company <a href="https://buddertech.com" target="_blank" style="color:#1d67ce; font-weight:bold;">Budder Technology LLC</a>.
+      </p>
+    </section>
+
+    <section class="section" id="why-swift-deploy">
+      <h2 class="section-heading">Why Choose Swift Deploy?</h2>
+      <ul>
+        <li>
+          <strong>Rapid Results:</strong> From sign-up to launch, your business site can be ready in just 10 minutes, thanks to our unique blend of AI automation and real designer skills.
+        </li>
+        <li>
+          <strong>One-Time Low Price:</strong> For just $49, get everything you need—custom design, SEO, and lifetime hosting—with no recurring fees.
+        </li>
+        <li>
+          <strong>Professional Credibility:</strong> Dazzle customers with a beautiful, mobile-responsive website that builds trust and converts.
+        </li>
+        <li>
+          <strong>Optimized for Success:</strong> Our SEO experts ensure your new site has the right keywords, metadata, and speedy loading for maximum search engine visibility.
+        </li>
+        <li>
+          <strong>Add-Ons Available:</strong> Need a custom domain? We’ll help you set it up through Budder Technology, making online branding a breeze.
+        </li>
+      </ul>
+      <p>
+        Whether you need a personal portfolio, local storefront, service landing page, or professional business profile—Swift Deploy delivers results <strong>fast</strong>. Harness the agility of technology with the personal touch of experienced developers. <br><br>
+        <em>This page was proudly built by Swift Deploy—see for yourself how easily your vision can become reality.</em>
+      </p>
+    </section>
+
+    <section class="section" id="faq">
+      <h2 class="section-heading">Frequently Asked Questions</h2>
+      <ul>
+        <li>
+          <strong>How much does Swift Deploy cost?</strong>
+          <br>
+          Just <strong>$49</strong>—one time. There are no hidden costs, no monthly bills, and website hosting is always free via GitHub Pages.
+        </li>
+        <li>
+          <strong>What if I want to use my own domain?</strong>
+          <br>
+          No problem! For a small add-on fee, Budder Technology will connect your custom domain for you with full support.
+        </li>
+        <li>
+          <strong>Can I customize my site?</strong>
+          <br>
+          Yes! You can select your <strong>colors and upload your logo</strong> on order, and every site is tailor-made for you.
+        </li>
+        <li>
+          <strong>Is this a drag-and-drop builder?</strong>
+          <br>
+          No—Swift Deploy combines AI tech and professional design, so you get a <strong>unique, fully built website</strong> ready for business, not a cookie-cutter template.
+        </li>
+      </ul>
+      <p>
+        <strong>Still have questions?</strong> Visit <a href="https://swiftdeploy.com" target="_blank" style="color:#1d67ce; font-weight:bold;">swiftdeploy.com</a> or reach out to us via our main website for more details.
+      </p>
+    </section>
+
+    <section class="section" id="cta">
+      <h2 class="section-heading">Get Your Site Live in 10 Minutes</h2>
+      <p>
+      It’s never been easier or more affordable to put your business online. Click below to experience the power and simplicity of Swift Deploy for yourself. Elevate your brand—<strong>start now and impress your customers today!</strong><br>
+      <a href="https://swiftdeploy.com/make-my-website/" target="_blank" style="display:inline-block;margin-top:1.5rem;background:#1d67ce;color:#fff;padding:0.9rem 2.2rem;font-size:1.2rem;font-weight:600;border-radius:8px;text-decoration:none;transition:background 0.2s;" onmouseover="this.style.background='#ff6542';" onmouseout="this.style.background='#1d67ce';">Get Started Instantly</a>
+      </p>
+    </section>
+
+    <!-- Dynamic Footer -->
+    <footer>
+      <div id="footer-container"></div>
+    </footer>
+  </div>
+  <!-- Scroll To Top Button -->
+  <button id="scrollToTopBtn" aria-label="Scroll to top">
+    <i class="fa fa-arrow-up"></i>
+  </button>
+  <script>
+    // Example dynamic data (you’ll replace this with actual values using Make)
+    const data = {
+      logosubmitted: "",
+      footer_type: "",
+      email: "",
+      phone_display: "",
+      phone_raw: "",
+      facebook: "",
+      instagram: "",
+      twitter: "",
+      linkedin: "",
+      youtube: "",
+      address: "",
+      encoded_address: ""
+    };
+    Object.keys(data).forEach(key => {
+    if (data[key] === null || data[key] === "null" || typeof data[key] !== "string" || data[key].trim().startsWith("~")) {
+      data[key] = "";
+    }
+    });
+    // Inject logo or business name
+    const logoContainer = document.getElementById("logo-container");
+    if (data.logosubmitted && data.logosubmitted !== "") {
+      logoContainer.innerHTML = `<a href="#"><img src="${data.logosubmitted}" alt="Swift Deploy logo" style="max-height: 40px;"></a>`;
+    } else {
+      logoContainer.innerHTML = `<a href="#">Swift Deploy</a>`;
+    }
+
+    if (data.address !== "" && data.encoded_address !== ""){
+      data.footer_type = "map";
+    }
+    else if (data.phone_raw !== "" && data.phone_display !== ""){
+      data.footer_type = "two-column";
+    }
+    else{
+      data.footer_type = "simple";
+    }
+    // Render footer based on footer_type
+    const footer = document.getElementById("footer-container");
+    if (data.footer_type === "simple") {
+      footer.innerHTML = `&copy; 2025 Swift Deploy | Powered by <a href="http://swiftdeploy.com" target="_blank">SwiftDeploy</a> from <a href="https://buddertech.com" target="_blank">Budder Technology</a>`;
+    }
+    else if (data.footer_type === "two-column") {
+      footer.innerHTML = `
+       <div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 2rem;">
+          <div style="flex: 1; min-width: 200px;">
+            &copy; 2025 Swift Deploy | Powered by <a href="http://swiftdeploy.com" target="_blank">SwiftDeploy</a> from <a href="https://buddertech.com" target="_blank">Budder Technology</a>
+          </div>
+          <div style="flex: 1; min-width: 200px;">
+            ${data.email ? `Email: <a href="mailto:${data.email}" target="_blank">${data.email}</a><br>` : ""}
+            ${data.phone_display ? `Phone: <a href="tel:${data.phone_raw}" target="_blank">${data.phone_display}</a>` : ""}
+            <div style="margin-top: 0.5rem;">
+              ${data.facebook ? `<a href="${data.facebook}" target="_blank"><i class="fab fa-facebook"></i></a>` : ""}
+              ${data.instagram ? `<a href="${data.instagram}" target="_blank"><i class="fab fa-instagram"></i></a>` : ""}
+              ${data.twitter ? `<a href="${data.twitter}" target="_blank"><i class="fab fa-twitter"></i></a>` : ""}
+              ${data.linkedin ? `<a href="${data.linkedin}" target="_blank"><i class="fab fa-linkedin"></i></a>` : ""}
+              ${data.youtube ? `<a href="${data.youtube}" target="_blank"><i class="fab fa-youtube"></i></a>` : ""}
+            </div>
+          </div>
+        </div>
+      `;
+    }
+    else if (data.footer_type === "map") {
+      footer.innerHTML = `
+      <div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 2rem;">
+          <div style="flex: 1; min-width: 200px;">
+            &copy; 2025 Swift Deploy | Powered by <a href="http://swiftdeploy.com" target="_blank">SwiftDeploy</a> from <a href="https://buddertech.com" target="_blank">Budder Technology</a>
+          </div>
+          <div style="flex: 1; min-width: 200px;">
+            ${data.email ? `Email: <a href="mailto:${data.email}" target="_blank">${data.email}</a><br>` : ""}
+            ${data.phone_display ? `Phone: <a href="tel:${data.phone_raw}" target="_blank">${data.phone_display}</a>` : ""}
+            <div style="margin-top: 0.5rem;">
+              ${data.facebook ? `<a href="${data.facebook}" target="_blank"><i class="fab fa-facebook"></i></a>` : ""}
+              ${data.instagram ? `<a href="${data.instagram}" target="_blank"><i class="fab fa-instagram"></i></a>` : ""}
+              ${data.twitter ? `<a href="${data.twitter}" target="_blank"><i class="fab fa-twitter"></i></a>` : ""}
+              ${data.linkedin ? `<a href="${data.linkedin}" target="_blank"><i class="fab fa-linkedin"></i></a>` : ""}
+              ${data.youtube ? `<a href="${data.youtube}" target="_blank"><i class="fab fa-youtube"></i></a>` : ""}
+            </div>
+          </div>
+          <div style="flex: 1; min-width: 200px;">
+            ${data.address ? `<p>${data.address}</p>` : ""}
+            <iframe
+              width="100%" height="200"
+              frameborder="0" style="border:0"
+              src="https://www.google.com/maps?q=${data.encoded_address}&output=embed"
+              allowfullscreen>
+            </iframe>
+          </div>
+        </div>
+      `;
+    }
+  </script>
+</body>
+</html>
